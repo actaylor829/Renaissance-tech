@@ -1,0 +1,83 @@
+---
+- name: RHEL 8 FULL Automation Suite
+  hosts: localhost
+  become: yes
+  become_method: sudo
+  connection: local
+
+  tasks:
+
+    - name: Run hardening script
+      script: ../scripts/hardening.sh
+      register: harden_result
+      ignore_errors: yes
+
+    - name: Display hardening results
+      debug:
+        var: harden_result.stdout_lines
+
+    - name: Run backup script
+      script: ../scripts/backup.sh
+      register: backup_result
+      ignore_errors: yes
+
+    - name: Display backup results
+      debug:
+        var: backup_result.stdout_lines
+
+    - name: Run service check script
+      script: ../scripts/service_check.sh
+      register: service_result
+      ignore_errors: yes
+
+    - name: Display service check results
+      debug:
+        var: service_result.stdout_lines
+
+    - name: Run OpenLDAP verification
+      script: ../scripts/openldap_check.sh
+      register: ldap_result
+      ignore_errors: yes
+
+    - name: Display OpenLDAP results
+      debug:
+        var: ldap_result.stdout_lines
+
+    - name: Run DNS verification
+      script: ../scripts/dns_check.sh
+      register: dns_result
+      ignore_errors: yes
+
+    - name: Display DNS results
+      debug:
+        var: dns_result.stdout_lines
+
+    - name: Run DHCP verification
+      script: ../scripts/dhcp_check.sh
+      register: dhcp_result
+      ignore_errors: yes
+
+    - name: Display DHCP results
+      debug:
+        var: dhcp_result.stdout_lines
+
+    - name: Run system monitoring script
+      script: ../scripts/system_monitor.sh
+      register: monitor_result
+      ignore_errors: yes
+
+    - name: Display system monitoring results
+      debug:
+        var: monitor_result.stdout_lines
+
+    - name: Final summary report
+      debug:
+        msg: |
+          ✅ RHEL 8 Automation Suite Complete
+          🔐 Hardening: {{ harden_result.rc }}
+          💾 Backup: {{ backup_result.rc }}
+          ⚙️ Service Check: {{ service_result.rc }}
+          📡 LDAP Check: {{ ldap_result.rc }}
+          🌐 DNS Check: {{ dns_result.rc }}
+          🧩 DHCP Verification: {{ dhcp_result.rc }}
+          📊 System Monitoring: {{ monitor_result.rc }}
