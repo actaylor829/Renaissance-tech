@@ -28,3 +28,21 @@ Technologies used
 - ** Virtualbox / RHELVM**
 
 ---
+## 📁 Project Structure
+
+Renaissance-tech/
+│
+├── 11-ansible/
+│ ├── rhel8_automation.yml # Main Ansible playbook
+│ └── inventory (localhost)
+│
+├── scripts/
+│ ├── hardening.sh # Security and SSH hardening
+│ ├── backup.sh # System backup automation
+│ ├── service_check.sh # Service availability validation
+│ ├── openldap_check.sh # LDAP verification
+│ ├── dns_check.sh # DNS verification
+│ ├── dhcp_check.sh # DHCP service verification
+│ └── system_monitor.sh # System monitoring automation
+│
+└── README.md
